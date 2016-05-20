@@ -4,7 +4,7 @@ angular.module('cooperationprototypingApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('leapmotion', {
-        url: '/leapmotion',
+        url: '/',
         template: '<leapmotion></leapmotion>'
       });
   });

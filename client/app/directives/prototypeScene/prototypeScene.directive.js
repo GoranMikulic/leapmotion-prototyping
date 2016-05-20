@@ -14,12 +14,21 @@ angular.module('cooperationprototypingApp')
         var info, stats, renderer, scene, camera, controls;
 
         var clientSocket = socket.socket;
+        var handy2initialized = false;
 
         clientSocket.on('movement', function(object) {
 
           var index = object.index;
           var hand = object;
           var handy = (handies[index] || (handies[index] = new Handy()));
+
+
+          if(!handy2initialized) {
+              var handy2 = new Handy();
+              handy2.outputData(index, hand);
+              handy2initialized = true;
+          }
+
           handy.outputData(index, hand);
 
           hand.fingers.forEach(function(finger, index) {
@@ -35,7 +44,7 @@ angular.module('cooperationprototypingApp')
 
         loop.animate = function(frame) {
           frame.hands.forEach(function(hand, index) {
-            console.log(hand);
+            //console.log(hand);
 
             angular.forEach(hand.fingers, function(finger, fingerKey) {
               angular.forEach(finger.bones, function(bone, boneKey) {
