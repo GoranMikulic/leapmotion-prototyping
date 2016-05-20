@@ -5,7 +5,7 @@ class PrototypeComponent {
   constructor(socket, Hand, Fingers, SceneModel, lightHandModel) {
 
     var self = this;
-    //this.fingerlings = {};
+    
     this.handies = {};
     this.loop = {};
     this.sceneModel = SceneModel.build();
