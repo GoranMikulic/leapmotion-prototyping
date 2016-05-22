@@ -36,7 +36,8 @@ angular.module('cooperationprototypingApp')
       });
 
       renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+      var container = document.getElementById('scenebox');
+      container.appendChild(renderer.domElement);
 
       var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
       camera.position.set(500, 500, 500);
