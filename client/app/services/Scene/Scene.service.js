@@ -38,11 +38,11 @@ angular.module('cooperationprototypingApp')
 
     function createBalls(scene) {
       //setInterval(function() {
-      var ball = new Physijs.SphereMesh(
-        new THREE.SphereGeometry(
-          20,
-          16,
-          16
+      var ball = new Physijs.BoxMesh(
+        new THREE.BoxGeometry(
+          50,
+          50,
+          50
         ),
         Physijs.createMaterial(
           new THREE.MeshNormalMaterial(),
@@ -83,7 +83,7 @@ angular.module('cooperationprototypingApp')
       camera.position.set(500, 500, 500);
       var controls = new THREE.TrackballControls(camera, renderer.domElement);
       var scene = new Physijs.Scene();
-      scene.setGravity(new THREE.Vector3(0, -50, 0));
+      scene.setGravity(new THREE.Vector3(0, -200, 0));
       scene.addEventListener('update', function() {
         scene.simulate(undefined, 2);
       });
