@@ -6,8 +6,16 @@ angular.module('cooperationprototypingApp')
     function initMeshBox() {
       // ground box
       var geometry = new THREE.BoxGeometry(500, 2, 500);
-      var material = new THREE.MeshNormalMaterial();
-      var mesh = new THREE.Mesh(geometry, material);
+      //var geometry = new THREE.CubeGeometry(100, 100, 2, 10, 10);
+      //var material = new THREE.MeshNormalMaterial();
+      var material = Physijs.createMaterial(
+        new THREE.MeshNormalMaterial(),
+        .4,
+        .8
+      );
+
+      //var mesh = new THREE.Mesh(geometry, material);
+      var mesh = new Physijs.BoxMesh(geometry, material, 0);
       mesh.position.set(0, -1, 0);
 
       return mesh;
@@ -28,6 +36,38 @@ angular.module('cooperationprototypingApp')
 
     };
 
+    function createBalls(scene) {
+      //setInterval(function() {
+      var ball = new Physijs.BoxMesh(
+        new THREE.BoxGeometry(
+          50,
+          50,
+          50
+        ),
+        Physijs.createMaterial(
+          new THREE.MeshNormalMaterial(),
+          .4,
+          .6
+        ),
+        1
+      );
+
+      var r = {
+        x: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
+        y: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
+        z: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12
+      };
+
+      ball.rotation.set(r.x, r.y, r.z);
+      ball.position.y = 40;
+      ball.castShadow = true;
+      ball.receiveShadow = true;
+
+      scene.add(ball);
+      //}, 600);
+    }
+
+
     this.build = function() {
       var renderer = new THREE.WebGLRenderer({
         alpha: 1,
@@ -42,7 +82,12 @@ angular.module('cooperationprototypingApp')
       var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
       camera.position.set(500, 500, 500);
       var controls = new THREE.TrackballControls(camera, renderer.domElement);
-      var scene = new THREE.Scene();
+      var scene = new Physijs.Scene();
+      scene.setGravity(new THREE.Vector3(0, -200, 0));
+      scene.addEventListener('update', function() {
+        scene.simulate(undefined, 2);
+      });
+
       var mesh = initMeshBox();
       scene.add(mesh);
       mesh = new THREE.GridHelper(250, 10);
@@ -50,10 +95,26 @@ angular.module('cooperationprototypingApp')
       // axes
       var axis = new THREE.AxisHelper(250);
       scene.add(axis);
+      createBalls(scene);
+      //render(scene, camera, renderer);
+      scene.simulate();
       renderer.render(scene, camera);
 
       var sceneModel = new Scene(renderer, camera, controls, scene);
       return sceneModel;
     };
+
+    function render(scene, camera, renderer) {
+      for (var i = 5; i < scene.children.length - 5; i++) {
+        var obj = scene.children[i];
+
+        if (obj.position.y <= -50) {
+          scene.remove(obj);
+        }
+      }
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(render);
+    }
 
   });
