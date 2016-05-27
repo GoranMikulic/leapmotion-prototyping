@@ -47,7 +47,7 @@ angular.module('cooperationprototypingApp')
     function cancelVelocity(threeObject) {
       threeObject.__dirtyPosition = true;
       threeObject.setLinearVelocity(new THREE.Vector3(0, 0, 0));
-      //threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+      threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     }
 
     this.build = function(scene, fingerDataViewerId, parent) {
@@ -62,7 +62,6 @@ angular.module('cooperationprototypingApp')
       var material = new THREE.MeshNormalMaterial();
       var phalange = new Physijs.BoxMesh(geometry, material, 100);
 
-      //cancelVelocity(phalange);
       parentObject.add(phalange);
       return phalange;
 
