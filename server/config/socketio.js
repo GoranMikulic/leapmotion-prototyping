@@ -26,7 +26,11 @@ function onConnect(socket) {
     //   data.index = 333;
     //   socket.emit('movement', data);
     // }, 3000);
+
+    //emit to sending client TODO: Process client movement locally
     socket.emit('movement', data);
+    //emit to everyone else
+    socket.broadcast.emit('movement', data);
 
   });
 
