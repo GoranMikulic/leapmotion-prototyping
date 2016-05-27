@@ -36,37 +36,6 @@ angular.module('cooperationprototypingApp')
 
     };
 
-    function createBalls(scene) {
-      //setInterval(function() {
-      var ball = new Physijs.BoxMesh(
-        new THREE.BoxGeometry(
-          50,
-          50,
-          50
-        ),
-        Physijs.createMaterial(
-          new THREE.MeshNormalMaterial(),
-          .4,
-          .6
-        ),
-        1
-      );
-
-      var r = {
-        x: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-        y: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-        z: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12
-      };
-
-      ball.rotation.set(r.x, r.y, r.z);
-      ball.position.y = 40;
-      ball.castShadow = true;
-      ball.receiveShadow = true;
-
-      scene.add(ball);
-      //}, 600);
-    }
-
 
     this.build = function() {
       var renderer = new THREE.WebGLRenderer({
@@ -95,7 +64,6 @@ angular.module('cooperationprototypingApp')
       // axes
       var axis = new THREE.AxisHelper(250);
       scene.add(axis);
-      createBalls(scene);
       //render(scene, camera, renderer);
       scene.simulate();
       renderer.render(scene, camera);
