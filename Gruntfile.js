@@ -124,18 +124,7 @@ module.exports = function(grunt) {
         jshintrc: '<%= yeoman.client %>/.jshintrc',
         reporter: require('jshint-stylish')
       },
-      server: {
-        options: {
-          jshintrc: '<%= yeoman.server %>/.jshintrc'
-        },
-        src: ['<%= yeoman.server %>/**/!(*.spec|*.integration).js']
-      },
-      serverTest: {
-        options: {
-          jshintrc: '<%= yeoman.server %>/.jshintrc-spec'
-        },
-        src: ['<%= yeoman.server %>/**/*.{spec,integration}.js']
-      },
+      
       all: ['<%= yeoman.client %>/{app,components}/**/!(*.spec|*.mock|app.constant).js'],
       test: {
         src: ['<%= yeoman.client %>/{app,components}/**/*.{spec,mock}.js']
@@ -415,7 +404,7 @@ module.exports = function(grunt) {
       },
       heroku: {
         options: {
-          remote: 'heroku',
+          remote: 'https://git.heroku.com/lmprototyping.git',
           branch: 'master'
         }
       },
