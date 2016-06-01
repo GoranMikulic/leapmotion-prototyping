@@ -34,6 +34,14 @@ function onConnect(socket) {
 
   });
 
+  socket.on('object', data => {
+    //emit to sending client TODO: Process client movement locally
+    socket.emit('object', data);
+    //emit to everyone else
+    socket.broadcast.emit('object', data);
+
+  });
+
   // Insert sockets below
   require('../api/movement/movement.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);

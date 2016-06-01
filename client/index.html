@@ -73,11 +73,19 @@
 
 
     <!-- leap motion -->
-    <script src="//js.leapmotion.com/leap-0.6.3.js"></script>
-    <script src=http://js.leapmotion.com/leap-plugins-0.1.8.js ></script>
-    <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
-    <script src=http://mrdoob.github.io/three.js/examples/js/controls/TrackballControls.js ></script>
-    <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
-    
+    <script src="bower_components/three/leap-0.6.3.js"></script>
+    <script src="bower_components/three/leap-plugins-0.1.8.js" ></script>
+    <script src="bower_components/three/three.min.js" ></script>
+    <script src="bower_components/three/TrackballControls.js" ></script>
+    <script src="bower_components/three/stats.min.js" ></script>
+    <script src="bower_components/three/physi.js"></script>
+    <script>
+      'use strict';
+
+      Physijs.scripts.worker = 'physijs_worker.js';
+      console.log(Physijs.scripts.worker);
+      Physijs.scripts.ammo = 'ammo.js';
+      console.log(Physijs.scripts.ammo);
+    </script>
   </body>
 </html>

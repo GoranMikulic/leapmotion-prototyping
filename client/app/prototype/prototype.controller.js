@@ -18,20 +18,31 @@ class PrototypeComponent {
 
     //Callback Funktion vom Backend empfangene Koordinationsdaten
     this.clientSocket.on('movement', function(hand) {
-      //var index = hand.index;
-      var index = this.handIndex;
+      var index = hand.index;
       var handy = (self.handies[index] || (self.handies[index] = Hand.build(self.sceneModel.scene, handData)));
       handy.outputData(index, hand);
+    });
+
+    this.clientSocket.on('object', function(type) {
+      if(type === 'cube') {
+          self.sceneModel.scene.add(self.utils.getCube());
+      } else if (type === 'ball') {
+          self.sceneModel.scene.add(self.utils.getBall());
+      }
     });
   }
 
   $onInit() {
     var self = this;
+    self.clientIndex =  {};
 
-    //Leapmotion Loop Funktion
+    //Leapmotion Loop Function
     this.loop.animate = function(frame) {
       frame.hands.forEach(function(hand, index) {
-        self.clientSocket.emit('movement', self.lightHandModel.build(hand,index));
+        if(!self.clientIndex[index]) {
+          self.clientIndex[index] = new Date().getTime();
+        }
+        self.clientSocket.emit('movement', self.lightHandModel.build(hand, self.clientIndex[index]));
       });
       self.sceneModel.update();
     };
@@ -44,12 +55,11 @@ class PrototypeComponent {
   }
 
   addObject(type) {
-    if(type === 'cube') {
-        this.sceneModel.scene.add(this.utils.getCube());
-    } else if (type === 'ball') {
-        this.sceneModel.scene.add(this.utils.getBall());
-    }
+    var self = this;
+    self.clientSocket.emit('object', type);
   }
+
+
 }
 
 angular.module('cooperationprototypingApp')
