@@ -1,6 +1,8 @@
   'use strict';
   (function() {
-
+    /**
+     * Main application controller
+     */
     class PrototypeComponent {
 
       constructor(socket, Hand, Fingers, SceneModel, lightHandModel, $scope, ObjectsUtils) {
@@ -36,6 +38,8 @@
         this.clientSocket = socket.socket;
         // util class where some default 3D-Objects are defined
         this.utils = ObjectsUtils;
+        // Class which handles 3D-Objects for the hand
+        this.Hand = Hand;
       }
 
       $onInit() {
@@ -72,24 +76,25 @@
           scale: 0.25
         }); // use = plugin
         Leap.loopController.setBackground(true);
+
+        // Listens on movements sent by the server
+        this.clientSocket.on('movement', function(hand) {
+          var index = hand.index;
+          var handy = (self.loadedHands[index] || (self.loadedHands[index] = self.Hand.build(self.sceneModel.scene, handData)));
+          handy.outputData(index, hand);
+        });
+
+        // Listens if objects are created by other clients
+        // TODO: currently no sync of object movements
+        this.clientSocket.on('object', function(type) {
+          if (type === 'cube') {
+            self.sceneModel.scene.add(self.utils.getCube());
+          } else if (type === 'ball') {
+            self.sceneModel.scene.add(self.utils.getBall());
+          }
+        });
+
       }
-
-      // Listens on movements sent by the server
-      this.clientSocket.on('movement', function(hand) {
-        var index = hand.index;
-        var handy = (self.loadedHands[index] || (self.loadedHands[index] = Hand.build(self.sceneModel.scene, handData)));
-        handy.outputData(index, hand);
-      });
-
-      // Listens if objects are created by other clients
-      // TODO: currently no sync of object movements
-      this.clientSocket.on('object', function(type) {
-        if (type === 'cube') {
-          self.sceneModel.scene.add(self.utils.getCube());
-        } else if (type === 'ball') {
-          self.sceneModel.scene.add(self.utils.getBall());
-        }
-      });
 
       /*
        * This method is used in UI to create a object
