@@ -1,9 +1,18 @@
 'use strict';
 
+/**
+ * Lightweight version for hand coordinates
+ *
+ * The default leapmotion model can't be sent through the socket
+ * because it has a recursive structure, it has to be converted.
+ */
 angular.module('cooperationprototypingApp')
-  .service('lightHandModel', function () {
+  .service('lightHandModel', function() {
 
-
+    /**
+     * Converts leapmotion coordinates to a lightweight model
+     * returns the converted model
+     */
     this.build = function(hand, index) {
       angular.forEach(hand.fingers, function(finger, fingerKey) {
         angular.forEach(finger.bones, function(bone, boneKey) {
