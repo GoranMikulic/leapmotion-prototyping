@@ -6,7 +6,6 @@ angular.module('cooperationprototypingApp')
     var Fingerling = function(scene, fingerDataViewerId, parent) {
 
       var fingerling = this;
-      var msg = fingerData.appendChild(document.createElement('div'));
 
       var tip = addPhalange(parent);
       var dip = addPhalange(parent);
@@ -15,11 +14,6 @@ angular.module('cooperationprototypingApp')
       var carp = addPhalange(parent);
 
       fingerling.outputData = function(index, finger) {
-
-        msg.innerHTML = 'Finger Method: ' +
-          'finger id:' + index + ' tip x:' + finger.tipPosition[0].toFixed(0) +
-          ' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
-
         tip.position.set(finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]);
         cancelVelocity(tip);
         dip.position.set(finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2]);

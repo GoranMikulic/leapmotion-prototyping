@@ -5,7 +5,6 @@ angular.module('cooperationprototypingApp')
 
     var Handy = function(scene, handDataViewerId) {
       var handy = this;
-      var msg = handDataViewerId.appendChild(document.createElement('div'));
       var fingerlings = {};
       // Objects with a common parent doesn't collide all finger objects are added to this object
       var parent = new Physijs.BoxMesh(new THREE.CubeGeometry(0, 0, 0), new THREE.MeshBasicMaterial({ color: 0x888888 }));
@@ -17,8 +16,6 @@ angular.module('cooperationprototypingApp')
 
       handy.outputData = function(index, hand) {
 
-        msg.innerHTML = 'Hand id:' + index + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) +
-          ' y:' + hand.stabilizedPalmPosition[1].toFixed(0) + ' z:' + hand.stabilizedPalmPosition[2].toFixed(0);
         // box.position.set(hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2]);
         // box.rotation.set(hand.pitch, -hand.yaw, hand.roll);
 

@@ -17,16 +17,16 @@ function onConnect(socket) {
   });
 
   socket.on('movement', data => {
-    //socket.log(JSON.stringify(data, null, 2));node
-    // setTimeout(function () {
+
+     //setTimeout(function () {
     //   data.index = 888;
     //   socket.emit('movement', data);
     // }, 8000);
-    // setTimeout(function () {
+     //setTimeout(function () {
     //   data.index = 333;
     //   socket.emit('movement', data);
     // }, 3000);
-
+    
     //emit to sending client TODO: Process client movement locally
     socket.emit('movement', data);
     //emit to everyone else
