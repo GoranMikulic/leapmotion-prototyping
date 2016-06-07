@@ -3,8 +3,8 @@
 angular.module('cooperationprototypingApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('prototype', {
+      .state('main', {
         url: '/',
-        template: '<prototype></prototype>'
+        template: '<main></main>'
       });
   });

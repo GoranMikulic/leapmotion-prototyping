@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Component: PrototypeComponent', function () {
+describe('Component: MainComponent', function () {
 
   // load the controller's module
   beforeEach(module('cooperationprototypingApp'));
 
-  var PrototypeComponent, scope;
+  var MainComponent, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($componentController, $rootScope) {
     scope = $rootScope.$new();
-    PrototypeComponent = $componentController('PrototypeComponent', {
+    MainComponent = $componentController('MainComponent', {
       $scope: scope
     });
   }));

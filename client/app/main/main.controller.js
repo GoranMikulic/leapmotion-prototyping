@@ -3,7 +3,7 @@
     /**
      * Main application controller
      */
-    class PrototypeComponent {
+    class MainComponent {
 
       constructor(socket, Hand, Fingers, SceneModel, lightHandModel, $scope, ObjectsUtils) {
 
@@ -109,9 +109,9 @@
      * Controller component definition
      */
     angular.module('cooperationprototypingApp')
-      .component('prototype', {
-        templateUrl: 'app/prototype/prototype.html',
-        controller: PrototypeComponent
+      .component('main', {
+        templateUrl: 'app/main/main.html',
+        controller: MainComponent
       });
 
   })();
