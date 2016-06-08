@@ -40,6 +40,8 @@
         this.utils = ObjectsUtils;
         // Class which handles 3D-Objects for the hand
         this.Hand = Hand;
+
+        $scope.clientCounter = 0;
       }
 
       $onInit() {
@@ -56,6 +58,7 @@
           frame.hands.forEach(function(hand, index) {
             if (!self.clientIndex[index]) {
               self.clientIndex[index] = new Date().getTime();
+              $scope.clientCounter += 1;
             }
             self.clientSocket.emit('movement', self.lightHandModel.build(hand, self.clientIndex[index]));
           });
