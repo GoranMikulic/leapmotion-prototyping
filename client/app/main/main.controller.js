@@ -40,14 +40,16 @@
         this.utils = ObjectsUtils;
         // Class which handles 3D-Objects for the hand
         this.Hand = Hand;
-
-        $scope.clientCounter = 0;
+        this.scope = $scope;
+        this.scope.clientCounter = 0;
       }
 
       $onInit() {
         var self = this;
         self.clientIndex = {};
-
+        var initTime = new Date().getTime();
+        self.scope.clientCounter = 0;
+        
         /*
          * Defines what happens on each frame that is processed by leapmotion.
          * Sets index for the client and emits coordinates to backend.
@@ -55,12 +57,14 @@
          * Important: Loop runs only if controller is connected.
          */
         this.loop.animate = function(frame) {
+
           frame.hands.forEach(function(hand, index) {
-            if (!self.clientIndex[index]) {
-              self.clientIndex[index] = new Date().getTime();
-              $scope.clientCounter += 1;
+            var handIdentifier = initTime + index;
+            if (!self.clientIndex[handIdentifier]) {
+              self.clientIndex[handIdentifier] = handIdentifier;
             }
-            self.clientSocket.emit('movement', self.lightHandModel.build(hand, self.clientIndex[index]));
+
+            self.clientSocket.emit('movement', self.lightHandModel.build(hand, self.clientIndex[handIdentifier]));
           });
           self.sceneModel.update();
         };
