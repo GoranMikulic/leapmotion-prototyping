@@ -49,7 +49,7 @@
         self.clientIndex = {};
         var initTime = new Date().getTime();
         self.scope.clientCounter = 0;
-        
+
         /*
          * Defines what happens on each frame that is processed by leapmotion.
          * Sets index for the client and emits coordinates to backend.
@@ -96,6 +96,7 @@
         this.clientSocket.on('object', function(type) {
           if (type === 'cube') {
             self.sceneModel.scene.add(self.utils.getCube());
+            console.log(cube.position);
           } else if (type === 'ball') {
             self.sceneModel.scene.add(self.utils.getBall());
           }
