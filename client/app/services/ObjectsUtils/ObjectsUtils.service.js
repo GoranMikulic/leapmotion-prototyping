@@ -1,10 +1,17 @@
 'use strict';
 
 angular.module('cooperationprototypingApp')
-  .service('ObjectsUtils', function () {
+  .service('ObjectsUtils', function() {
 
+    this.getObject = function(type) {
+      if (type === 'cube') {
+        return getCube();
+      } else if (type === 'ball') {
+        return getBall();
+      }
+    };
 
-    this.getCube =  function() {
+    function getCube() {
       //setInterval(function() {
       var cube = new Physijs.BoxMesh(
         new THREE.BoxGeometry(
@@ -20,21 +27,14 @@ angular.module('cooperationprototypingApp')
         1
       );
 
-      var r = {
-        x: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-        y: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-        z: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12
-      };
-
-      cube.rotation.set(r.x, r.y, r.z);
-      cube.position.y = 40;
+      cube.position.y = 100;
       cube.castShadow = true;
       cube.receiveShadow = true;
 
       return cube;
     };
 
-    this.getBall =  function() {
+    function getBall() {
       //setInterval(function() {
       var ball = new Physijs.SphereMesh(
         new THREE.SphereGeometry(
@@ -50,13 +50,7 @@ angular.module('cooperationprototypingApp')
         1
       );
 
-      var r = {
-        x: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-        y: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12,
-        z: Math.random() * (Math.PI - Math.PI / 12) + Math.PI / 12
-      };
 
-      ball.rotation.set(r.x, r.y, r.z);
       ball.position.y = 40;
       ball.castShadow = true;
       ball.receiveShadow = true;

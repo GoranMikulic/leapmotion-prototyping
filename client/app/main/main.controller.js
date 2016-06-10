@@ -40,8 +40,10 @@
         this.utils = ObjectsUtils;
         // Class which handles 3D-Objects for the hand
         this.Hand = Hand;
+        this.objects = {};
         this.scope = $scope;
         this.scope.clientCounter = 0;
+        self.createdObjects = {};
       }
 
       $onInit() {
@@ -75,6 +77,19 @@
          */
         setInterval(function() {
           self.sceneModel.update();
+
+          angular.forEach(self.objects, function(object, key) {
+            var position = {};
+            position.id = key;
+            position.x = object.position.x;
+            position.y = object.position.y;
+            position.z = object.position.z;
+
+            if(self.createdObjects[position.id]) {
+              self.clientSocket.emit('objectmovement', position);
+            }
+          });
+
         }, 50);
 
         // Initializing leapmotion library
@@ -83,6 +98,18 @@
           scale: 0.25
         }); // use = plugin
         Leap.loopController.setBackground(true);
+
+        this.clientSocket.on('objectmovement', function(position) {
+          console.log("test1");
+
+          if(!self.createdObjects[position.id]) {
+              console.log("test");
+              self.objects[position.id].position.x = position.x;
+              self.objects[position.id].position.y = position.y;
+              self.objects[position.id].position.z = position.z;
+            }
+
+        });
 
         // Listens on movements sent by the server
         this.clientSocket.on('movement', function(hand) {
@@ -93,13 +120,10 @@
 
         // Listens if objects are created by other clients
         // TODO: currently no sync of object movements
-        this.clientSocket.on('object', function(type) {
-          if (type === 'cube') {
-            self.sceneModel.scene.add(self.utils.getCube());
-            console.log(cube.position);
-          } else if (type === 'ball') {
-            self.sceneModel.scene.add(self.utils.getBall());
-          }
+        this.clientSocket.on('object', function(objInfo) {
+          var object = self.utils.getObject(objInfo.type);
+          self.objects[objInfo.id] = object;
+          self.sceneModel.scene.add(object);
         });
 
       }
@@ -109,7 +133,10 @@
        */
       addObject(type) {
         var self = this;
-        self.clientSocket.emit('object', type);
+        var objInfo.type = type;
+        objInfo.id = new Date().getTime();
+        self.createdObjects[objInfo.id] = objInfo.id;
+        self.clientSocket.emit('object', objInfo);
       }
     }
 
