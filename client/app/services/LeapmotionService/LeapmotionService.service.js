@@ -11,6 +11,7 @@ angular.module('cooperationprototypingApp')
     var clientIndex = {};
     var initTime = new Date().getTime();
     var sceneModel;
+    var controllerIsConnected = false;
 
     /**
      * Key-value-store which holds all loaded hand ids
@@ -24,6 +25,7 @@ angular.module('cooperationprototypingApp')
      * Important: Loop runs only if controller is connected.
      */
     loop.animate = function(frame) {
+      controllerIsConnected = true;
 
       frame.hands.forEach(function(hand, index) {
         var handIdentifier = initTime + index;
@@ -58,7 +60,9 @@ angular.module('cooperationprototypingApp')
      * movements visible.
      */
     setInterval(function() {
-      sceneModel.update();
+      if(!controllerIsConnected) {
+          sceneModel.update();
+      }
     }, 50);
 
   });
