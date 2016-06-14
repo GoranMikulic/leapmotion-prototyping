@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cooperationprototypingApp')
-  .service('LeapmotionService', function(SceneModel, ObjectsUtils, socket, lightHandModel, Hand) {
+  .service('LeapmotionService', function(SceneModel, ObjectsUtils, socket, lightHandModel, Hand, Ball, SessionInfo) {
 
     /*
      * Variable for leapmotion loop, instantiated in $onInit() method in this
@@ -39,6 +39,7 @@ angular.module('cooperationprototypingApp')
 
       });
 
+      sendBallPosition();
       sceneModel.update();
     };
 
@@ -59,13 +60,28 @@ angular.module('cooperationprototypingApp')
       handModel.outputData(index, hand);
     };
 
+    function sendBallPosition() {
+      if (SessionInfo.isHost) {
+        var ball = Ball.getBall();
+        if(ball) {
+          var position = {
+            x: ball.position.x,
+            y: ball.position.y,
+            z: ball.position.z
+          };
+          socket.socket.emit('ballmovement', position);
+        }
+      }
+    }
+
     /*
      * If no controller is connected, scene should still update to make object
      * movements visible.
      */
     setInterval(function() {
-      if(!controllerIsConnected) {
-          sceneModel.update();
+      if (!controllerIsConnected) {
+        sceneModel.update();
+        sendBallPosition();
       }
     }, 50);
 

@@ -12,12 +12,14 @@
     <div uib-collapse="nav.isCollapsed" class="navbar-collapse collapse col-md-4" id="navbar-main">
       <ul class="nav navbar-nav">
         <li>
-            <a href="" ng-click="$ctrl.addObject('cube')">Add Cube</a>
+            <a href="" ng-click="$ctrl.addBall()">Add Ball</a>
         </li>
         <li>
-            <a href="" ng-click="$ctrl.addObject('ball')">Add Ball</a>
+            <a href="" ng-class="{'active': sessionInfo.isHost == true}" ng-click="$ctrl.setHost()">Player 1 (Host) {{sessionInfo.isHost}}</a>
         </li>
-
+        <li>
+            <a href="" ng-class="{'active': sessionInfo.isSecondPlayer == true}" ng-click="$ctrl.setPlayer2()">Player 2 {{sessionInfo.isSecondPlayer}}</a>
+        </li>
       </ul>
     </div>
     <!--<div class="col-md-5 pull-right">
