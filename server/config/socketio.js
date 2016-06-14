@@ -51,11 +51,13 @@ function onConnect(socket) {
   });
 
   socket.on('ballmovement', data => {
-    //emit to sending client TODO: Process client movement locally
-    //socket.emit('objectmovement', data);
-    //emit to everyone else
     socket.broadcast.emit('ballmovement', data);
 
+  });
+
+  socket.on('goal', data => {
+    socket.emit('goal', data);
+    socket.broadcast.emit('goal', data);
   });
 
   // Insert sockets below

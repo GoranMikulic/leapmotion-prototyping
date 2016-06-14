@@ -44,6 +44,19 @@
             self.Ball.setPosition(position.x, position.y, position.z);
           }
         });
+
+        this.clientSocket.on('goal', function(goalNo) {
+          //goalNo 1 = Point for Player 1, goalNo 2 = Point for Player 2
+          if(goalNo === 1) {
+              self.scope.sessionInfo.hostPoints += 1;
+          } else {
+              self.scope.sessionInfo.secondPlayerPoints += 1;
+          }
+
+          var selectedObject = sceneModel.getScene().getObjectByName("ball");
+          sceneModel.getScene().remove(selectedObject);
+
+        });
       }
 
       /*

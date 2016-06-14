@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cooperationprototypingApp')
-  .service('SceneModel', function() {
+  .service('SceneModel', function(socket) {
 
-    function initMeshBox(x, y, z, width, height, depth, rotationX) {
+    function initMeshBox(x, y, z, width, height, depth, rotationX, rotationY, rotationZ) {
       // ground box
       var geometry = new THREE.BoxGeometry(width, height, depth);
       //var geometry = new THREE.CubeGeometry(100, 100, 2, 10, 10);
@@ -11,7 +11,7 @@ angular.module('cooperationprototypingApp')
       var material = Physijs.createMaterial(
         new THREE.MeshNormalMaterial({
           transparent: true,
-          opacity: 0.4
+          opacity: 0.2
         }),
         .4,
         .8
@@ -23,6 +23,14 @@ angular.module('cooperationprototypingApp')
       mesh.position.set(x, y, z);
       if (rotationX) {
         mesh.rotation.x = rotationX;
+      }
+
+      if (rotationY) {
+        mesh.rotation.y = rotationY;
+      }
+
+      if (rotationZ) {
+        mesh.rotation.z = rotationZ;
       }
 
       return mesh;
@@ -85,6 +93,19 @@ angular.module('cooperationprototypingApp')
       var wall2 = initMeshBox(0, 225, -250, 500, 2, 350, nintyDegreeRotation);
       scene.add(wall2);
 
+      var goal1 = initMeshBox(340, 225, 0, 600, 2, 450, nintyDegreeRotation, null, nintyDegreeRotation);
+      scene.add(goal1);
+
+      goal1.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+        emitGoal(scene, other_object, 1);
+      });
+
+      var goal2 = initMeshBox(-300, 225, 0, 600, 2, 450, nintyDegreeRotation, null, nintyDegreeRotation);
+      goal2.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+        emitGoal(scene, other_object, 2);
+      });
+      scene.add(goal2);
+
       // axes
       var axis = new THREE.AxisHelper(250);
       scene.add(axis);
@@ -95,6 +116,12 @@ angular.module('cooperationprototypingApp')
       var sceneModel = new Scene(renderer, camera, controls, scene);
       return sceneModel;
     };
+
+    function emitGoal(scene, other_object, goalNo) {
+      if (other_object.name === "ball") {
+        socket.socket.emit("goal", goalNo);
+      }
+    }
 
     function render(scene, camera, renderer) {
       for (var i = 5; i < scene.children.length - 5; i++) {

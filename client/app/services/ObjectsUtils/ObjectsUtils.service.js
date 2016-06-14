@@ -31,7 +31,7 @@ angular.module('cooperationprototypingApp')
     };
 
     function getBall() {
-      //setInterval(function() {
+      
       var ball = new Physijs.SphereMesh(
         new THREE.SphereGeometry(
           20,

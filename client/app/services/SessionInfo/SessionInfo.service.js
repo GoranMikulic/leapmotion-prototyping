@@ -6,6 +6,9 @@ angular.module('cooperationprototypingApp')
     this.isHost = false;
     this.isSecondPlayer = false;
 
+    this.hostPoints = 0;
+    this.secondPlayerPoints = 0;
+
     this.setHost = function() {
       this.isHost = true;
       this.isSecondPlayer = false;
