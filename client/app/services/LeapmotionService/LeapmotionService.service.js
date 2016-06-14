@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cooperationprototypingApp')
-  .service('LeapmotionService', function(SceneModel, ObjectsUtils, socket, lightHandModel, Hand) {
+  .service('LeapmotionService', function(SceneModel, ObjectsUtils, socket, lightHandModel, Hand, Ball) {
 
     /*
      * Variable for leapmotion loop, instantiated in $onInit() method in this
@@ -18,7 +18,6 @@ angular.module('cooperationprototypingApp')
      */
     var loadedHands = {};
 
-    var ball;
 
     /*
      * Defines what happens on each frame that is processed by leapmotion.
@@ -39,12 +38,22 @@ angular.module('cooperationprototypingApp')
 
       });
 
+      if(Ball.getBallModel()) {
+
+        if(Ball.getBallModel().position.x + (Ball.getVelocity() * Ball.getDirection()) >= 500) {
+          socket.socket.emit('directionchange', -1);
+        } else if (Ball.getBallModel().position.x + (Ball.getVelocity() * Ball.getDirection()) <= 0) {
+          socket.socket.emit('directionchange', 1);
+        }
+
+        Ball.moveX();
+        console.log(Ball.getBallModel().position.x);
+      }
       sceneModel.update();
     };
 
     this.init = function(threeSceneModel) {
       sceneModel = threeSceneModel;
-
       // Initializing leapmotion library
       loop = Leap.loop(loop.animate);
       loop.use('screenPosition', {

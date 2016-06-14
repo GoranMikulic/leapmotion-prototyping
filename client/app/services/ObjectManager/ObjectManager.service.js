@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cooperationprototypingApp')
-  .service('ObjectManager', function(ObjectsUtils) {
+  .service('ObjectManager', function(ObjectsUtils, Ball) {
 
     var sceneModel;
     var socket;
@@ -11,8 +11,10 @@ angular.module('cooperationprototypingApp')
     };
 
     this.addObject = function(type) {
-      var object = ObjectsUtils.getObject(type);
-      sceneModel.scene.add(object);
+
+      Ball.build(10,1,sceneModel.scene);
+      //var object = ObjectsUtils.getObject(type);
+      //sceneModel.scene.add(object);
     };
 
   });

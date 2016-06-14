@@ -56,7 +56,7 @@ angular.module('cooperationprototypingApp')
       camera.position.set(500, 500, 500);
       var controls = new THREE.TrackballControls(camera, renderer.domElement);
       var scene = new Physijs.Scene();
-      scene.setGravity(new THREE.Vector3(0, -200, 0));
+      scene.setGravity(new THREE.Vector3(0, 0, 0));
       scene.addEventListener('update', function() {
         scene.simulate(undefined, 2);
       });

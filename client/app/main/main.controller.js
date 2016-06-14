@@ -5,13 +5,14 @@
      */
     class MainComponent {
 
-      constructor(socket, $scope, LeapmotionService, SceneModel, ObjectManager) {
+      constructor(socket, $scope, LeapmotionService, SceneModel, ObjectManager, Ball) {
 
         var self = this;
         this.clientSocket = socket.socket; // Socket for server communciation
         this.LeapmotionService = LeapmotionService;
         this.ObjectManager = ObjectManager;
         this.SceneModel = SceneModel;
+        this.Ball = Ball;
       }
 
       $onInit() {
@@ -31,6 +32,10 @@
         // TODO: currently no sync of object movements
         this.clientSocket.on('object', function(type) {
           self.ObjectManager.addObject(type);
+        });
+
+        this.clientSocket.on('ballmovement', function(positionInfo) {
+          //self.Ball.moveX(positionInfo.x);
         });
       }
 

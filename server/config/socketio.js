@@ -50,6 +50,13 @@ function onConnect(socket) {
 
   });
 
+  socket.on('ballmovement', data => {
+    // Berechne nächste Position des Balls und sende anschließend
+    // Information an clients
+    // socket.emit('ballmovement', data); -- Mein Client
+    // socket.broadcast.emit('ballmovement', data); -- Alle Anderen
+  })
+
   // Insert sockets below
   require('../api/movement/movement.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
