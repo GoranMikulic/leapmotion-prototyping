@@ -14,15 +14,15 @@ angular.module('cooperationprototypingApp')
       var carp = addPhalange(parent);
 
       fingerling.outputData = function(index, finger) {
-        tip.position.set(finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]);
+        tip.position.set(200, finger.tipPosition[1], finger.tipPosition[2]);
         cancelVelocity(tip);
-        dip.position.set(finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2]);
+        dip.position.set(200, finger.dipPosition[1], finger.dipPosition[2]);
         cancelVelocity(dip);
-        pip.position.set(finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2]);
+        pip.position.set(200, finger.pipPosition[1], finger.pipPosition[2]);
         cancelVelocity(pip);
-        mcp.position.set(finger.mcpPosition[0], finger.mcpPosition[1], finger.mcpPosition[2]);
+        mcp.position.set(200, finger.mcpPosition[1], finger.mcpPosition[2]);
         cancelVelocity(mcp);
-        carp.position.set(finger.carpPosition[0], finger.carpPosition[1], finger.carpPosition[2]);
+        carp.position.set(200, finger.carpPosition[1], finger.carpPosition[2]);
         cancelVelocity(carp);
 
         updatePhalange(tip, dip);
@@ -39,9 +39,9 @@ angular.module('cooperationprototypingApp')
     };
 
     function cancelVelocity(threeObject) {
-      threeObject.__dirtyPosition = true;
-      threeObject.setLinearVelocity(new THREE.Vector3(0, 0, 0));
-      threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+      //threeObject.__dirtyPosition = true;
+      //threeObject.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+      //threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     }
 
     this.build = function(scene, fingerDataViewerId, parent) {
@@ -54,7 +54,7 @@ angular.module('cooperationprototypingApp')
 
       var geometry = new THREE.BoxGeometry(20, 20, 1);
       var material = new THREE.MeshNormalMaterial();
-      var phalange = new Physijs.BoxMesh(geometry, material, 100);
+      var phalange = new THREE.Mesh(geometry, material, 100);
 
       parentObject.add(phalange);
       return phalange;
