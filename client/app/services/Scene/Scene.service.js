@@ -3,20 +3,24 @@
 angular.module('cooperationprototypingApp')
   .service('SceneModel', function() {
 
-    function initMeshBox() {
+    function initMeshBox(x, y, z, rotationX) {
       // ground box
       var geometry = new THREE.BoxGeometry(500, 2, 500);
       //var geometry = new THREE.CubeGeometry(100, 100, 2, 10, 10);
       //var material = new THREE.MeshNormalMaterial();
       var material = Physijs.createMaterial(
-        new THREE.MeshNormalMaterial(),
+        new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.4 }),
         .4,
         .8
       );
 
       //var mesh = new THREE.Mesh(geometry, material);
       var mesh = new Physijs.BoxMesh(geometry, material, 0);
-      mesh.position.set(0, -1, 0);
+
+      mesh.position.set(x, y, z);
+      if(rotationX) {
+        mesh.rotation.x = rotationX;
+      }
 
       return mesh;
     }
@@ -57,10 +61,20 @@ angular.module('cooperationprototypingApp')
         scene.simulate(undefined, 2);
       });
 
-      var mesh = initMeshBox();
-      scene.add(mesh);
-      mesh = new THREE.GridHelper(250, 10);
-      scene.add(mesh);
+      var ground = initMeshBox(0, 50, 0);
+      scene.add(ground);
+      //ground = new THREE.GridHelper(250, 10);
+      //scene.add(ground);
+
+      // build walls
+      var top = initMeshBox(0, 400, 0);
+      scene.add(top);
+      var nintyDegreeRotation = Math.PI / 2;
+      var wall1 = initMeshBox(0, 150, 250, nintyDegreeRotation);
+      scene.add(wall1);
+      var wall2 = initMeshBox(0, 150, -250, nintyDegreeRotation);
+      scene.add(wall2);
+
       // axes
       var axis = new THREE.AxisHelper(250);
       scene.add(axis);

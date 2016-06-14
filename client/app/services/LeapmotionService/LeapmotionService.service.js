@@ -18,6 +18,8 @@ angular.module('cooperationprototypingApp')
      */
     var loadedHands = {};
 
+    var ball;
+
     /*
      * Defines what happens on each frame that is processed by leapmotion.
      * Sets index for the client and emits coordinates to backend.
@@ -34,7 +36,9 @@ angular.module('cooperationprototypingApp')
         }
 
         socket.socket.emit('movement', lightHandModel.build(hand, clientIndex[handIdentifier]));
+
       });
+
       sceneModel.update();
     };
 

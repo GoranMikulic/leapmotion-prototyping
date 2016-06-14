@@ -13,21 +13,17 @@ angular.module('cooperationprototypingApp')
 
     function getCube() {
       //setInterval(function() {
-      var cube = new Physijs.BoxMesh(
+      var cube = new THREE.Mesh(
         new THREE.BoxGeometry(
           50,
           50,
           50
         ),
-        Physijs.createMaterial(
-          new THREE.MeshNormalMaterial(),
-          .4,
-          .6
-        ),
-        1
+        new THREE.MeshNormalMaterial()
       );
 
-      cube.position.y = 100;
+      cube.name = "cube";
+      cube.position.y = 200;
       cube.castShadow = true;
       cube.receiveShadow = true;
 
@@ -50,8 +46,9 @@ angular.module('cooperationprototypingApp')
         1
       );
 
+      ball.name = "ball";
 
-      ball.position.y = 40;
+      ball.position.y = 200;
       ball.castShadow = true;
       ball.receiveShadow = true;
 
