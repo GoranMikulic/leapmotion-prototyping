@@ -3,26 +3,26 @@
 angular.module('cooperationprototypingApp')
   .service('Fingers', function () {
 
-    var Fingerling = function(scene, fingerDataViewerId, parent) {
+    var Fingerling = function(scene, fingerDataViewerId, xposition) {
 
       var fingerling = this;
 
-      var tip = addPhalange(parent);
-      var dip = addPhalange(parent);
-      var pip = addPhalange(parent);
-      var mcp = addPhalange(parent);
-      var carp = addPhalange(parent);
+      var tip = addPhalange(scene);
+      var dip = addPhalange(scene);
+      var pip = addPhalange(scene);
+      var mcp = addPhalange(scene);
+      var carp = addPhalange(scene);
 
       fingerling.outputData = function(index, finger) {
-        tip.position.set(200, finger.tipPosition[1], finger.tipPosition[2]);
+        tip.position.set(xposition, finger.tipPosition[1], finger.tipPosition[2]);
         cancelVelocity(tip);
-        dip.position.set(200, finger.dipPosition[1], finger.dipPosition[2]);
+        dip.position.set(xposition, finger.dipPosition[1], finger.dipPosition[2]);
         cancelVelocity(dip);
-        pip.position.set(200, finger.pipPosition[1], finger.pipPosition[2]);
+        pip.position.set(xposition, finger.pipPosition[1], finger.pipPosition[2]);
         cancelVelocity(pip);
-        mcp.position.set(200, finger.mcpPosition[1], finger.mcpPosition[2]);
+        mcp.position.set(xposition, finger.mcpPosition[1], finger.mcpPosition[2]);
         cancelVelocity(mcp);
-        carp.position.set(200, finger.carpPosition[1], finger.carpPosition[2]);
+        carp.position.set(xposition, finger.carpPosition[1], finger.carpPosition[2]);
         cancelVelocity(carp);
 
         updatePhalange(tip, dip);
@@ -44,19 +44,19 @@ angular.module('cooperationprototypingApp')
       //threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     }
 
-    this.build = function(scene, fingerDataViewerId, parent) {
-        var finger = new Fingerling(scene, fingerDataViewerId, parent);
+    this.build = function(scene, fingerDataViewerId, xposition) {
+        var finger = new Fingerling(scene, fingerDataViewerId, xposition);
         return finger;
     };
 
 
-    function addPhalange(parentObject) {
+    function addPhalange(scene) {
 
       var geometry = new THREE.BoxGeometry(20, 20, 1);
       var material = new THREE.MeshNormalMaterial();
       var phalange = new THREE.Mesh(geometry, material, 100);
 
-      parentObject.add(phalange);
+      scene.add(phalange);
       return phalange;
 
     }
