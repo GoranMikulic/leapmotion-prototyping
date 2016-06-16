@@ -37,12 +37,19 @@
         this.clientSocket.on('object', function(type) {
           self.gameball = self.Ball.createNewBall(self.scope.sessionInfo.isHost); //if is host creates Physical ball, otherwise non-physical
           sceneModel.getScene().add(self.gameball);
-
-          var oldVector = self.gameball.getLinearVelocity();
-          self.gameball.setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100 * 10, oldVector.y, oldVector.z));
-          console.log(self.gameball.getLinearVelocity());
+          if(self.scope.sessionInfo.isHost) {
+              doInitialBallMovement();
+          }
+          // var oldVector = self.gameball.getLinearVelocity();
+          // self.gameball.setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100 * 10, oldVector.y, oldVector.z));
 
         });
+
+        //should be in Ball service but doesnt work there
+        function doInitialBallMovement() {
+          var oldVector = self.gameball.getLinearVelocity();
+          self.gameball.setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100 * 10, oldVector.y, oldVector.z));
+        }
 
         this.clientSocket.on('ballmovement', function(position) {
           if(!self.scope.sessionInfo.isHost) {
