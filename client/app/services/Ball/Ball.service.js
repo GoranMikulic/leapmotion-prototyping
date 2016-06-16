@@ -23,9 +23,27 @@ angular.module('cooperationprototypingApp')
 
       ball.name = "ball";
 
+      //var xvelocity = 5;
+
+      //ball.setLinearFactor(1, 0, 1);
+      //ball.setLinearRotation(0, 0, 0);
+      // ball.__dirtyPosition = true;
+      // ball.setAngularVelocity(new THREE.Vector3(100, 0, 0));
+      // ball.setLinearVelocity(new THREE.Vector3(5, 9, 0));
+
+
+      var oldVector = ball.getLinearVelocity(); // Vector of velocity the player already has
+      console.log(oldVector);
+
+
       ball.position.y = 200;
       ball.castShadow = true;
       ball.receiveShadow = true;
+
+      ball.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+        var oldVector = ball.getLinearVelocity();
+        ball.setLinearVelocity(new THREE.Vector3(oldVector.x - .5 * 100 * 10, oldVector.y - .5 * 10, oldVector.z + .5 * 100 * 10));
+      });
 
       return ball;
     }

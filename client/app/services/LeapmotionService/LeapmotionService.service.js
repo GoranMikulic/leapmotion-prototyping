@@ -39,6 +39,13 @@ angular.module('cooperationprototypingApp')
 
       });
 
+
+      // if(Ball.getBall()) {
+      //   var oldVector = Ball.getBall().getLinearVelocity();
+      //   Ball.getBall().setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100, oldVector.y, oldVector.z));
+      //   console.log(Ball.getBall().getLinearVelocity());
+      // }
+
       sendBallPosition();
       sceneModel.update();
     };
