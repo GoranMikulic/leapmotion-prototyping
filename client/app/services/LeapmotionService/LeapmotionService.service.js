@@ -31,11 +31,11 @@ angular.module('cooperationprototypingApp')
 
       frame.hands.forEach(function(hand, index) {
         var handIdentifier = initTime + index;
-        if (!clientIndex[handIdentifier]) {
-          clientIndex[handIdentifier] = handIdentifier;
+        if (!clientIndex[index]) {
+          clientIndex[index] = handIdentifier;
         }
 
-        socket.socket.emit('movement', lightHandModel.build(hand, clientIndex[handIdentifier]));
+        socket.socket.emit('movement', lightHandModel.build(hand, clientIndex[index]));
 
       });
 
@@ -52,25 +52,42 @@ angular.module('cooperationprototypingApp')
 
     this.init = function(threeSceneModel) {
       sceneModel = threeSceneModel;
-
+      SessionInfo.initTime = initTime;
       // Initializing leapmotion library
-      loop = Leap.loop(loop.animate);
+      loop = Leap.loop(loop.animate).use('handEntry').on('handLost', function(hand) {
+        console.log(sceneModel.getScene());
+
+        angular.forEach(clientIndex, function(handName) {
+          var selectedObject = sceneModel.getScene().getObjectByName(handName);
+          selectedObject.visible = false;
+        });
+
+        //var selectedObject = sceneModel.getScene().getObjectByName("hand");
+        //sceneModel.getScene().remove(selectedObject);
+      }).on('handFound', function(hand) {
+        angular.forEach(clientIndex, function(handName) {
+          var selectedObject = sceneModel.getScene().getObjectByName(handName);
+          selectedObject.visible = true;
+        });
+      });
+
       loop.use('screenPosition', {
         scale: 0.25
       }); // use = plugin
+
       Leap.loopController.setBackground(true);
     };
 
     this.doHandMovement = function(hand) {
       var index = hand.index;
-      var handModel = (loadedHands[index] || (loadedHands[index] = Hand.build(sceneModel.scene, hand.isHost)));
+      var handModel = (loadedHands[index] || (loadedHands[index] = Hand.build(sceneModel.scene, hand.isHost, index)));
       handModel.outputData(index, hand);
     };
 
     function sendBallPosition() {
       if (SessionInfo.isHost) {
         var ball = Ball.getBall();
-        if(ball) {
+        if (ball) {
           var position = {
             x: ball.position.x,
             y: ball.position.y,

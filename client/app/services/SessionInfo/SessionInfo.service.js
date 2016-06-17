@@ -5,6 +5,7 @@ angular.module('cooperationprototypingApp')
 
     this.isHost = false;
     this.isSecondPlayer = false;
+    this.initTime;
 
     this.hostPoints = 0;
     this.secondPlayerPoints = 0;
