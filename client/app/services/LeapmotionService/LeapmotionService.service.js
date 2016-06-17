@@ -54,22 +54,13 @@ angular.module('cooperationprototypingApp')
       sceneModel = threeSceneModel;
       SessionInfo.initTime = initTime;
       // Initializing leapmotion library
-      loop = Leap.loop(loop.animate).use('handEntry').on('handLost', function(hand) {
-        console.log(sceneModel.getScene());
-
-        angular.forEach(clientIndex, function(handName) {
-          var selectedObject = sceneModel.getScene().getObjectByName(handName);
-          selectedObject.visible = false;
+      loop = Leap.loop(loop.animate)
+        .use('handEntry')
+        .on('handLost', function(hand) {
+          Hand.hideHandModel(clientIndex);
+        }).on('handFound', function(hand) {
+          Hand.viewHandModel(clientIndex);
         });
-
-        //var selectedObject = sceneModel.getScene().getObjectByName("hand");
-        //sceneModel.getScene().remove(selectedObject);
-      }).on('handFound', function(hand) {
-        angular.forEach(clientIndex, function(handName) {
-          var selectedObject = sceneModel.getScene().getObjectByName(handName);
-          selectedObject.visible = true;
-        });
-      });
 
       loop.use('screenPosition', {
         scale: 0.25

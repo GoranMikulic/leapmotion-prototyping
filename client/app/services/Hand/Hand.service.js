@@ -3,11 +3,14 @@
 angular.module('cooperationprototypingApp')
   .service('Hand', function (Fingers, SessionInfo) {
 
-    var Hand = function(scene, isHost, index) {
+    var scene;
+
+    var Hand = function(handscene, isHost, index) {
       var hand = this;
       var fingerlings = {};
+      scene = handscene;
       // Objects with a common parent doesn't collide all finger objects are added to this object
-      //var parent = new Physijs.BoxMesh(new THREE.CubeGeometry(0, 0, 0), new THREE.MeshBasicMaterial({ color: 0x888888 }));
+      //var parent = new Three.Mesh(new THREE.CubeGeometry(0, 0, 0), new THREE.MeshBasicMaterial({ color: 0x888888 }));
 
       var isHostHand = isHost;
       var geometry = new THREE.BoxGeometry(10, 100, 150);
@@ -47,9 +50,23 @@ angular.module('cooperationprototypingApp')
       threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     }
 
+    this.hideHandModel = function(thisClientHands) {
+      angular.forEach(thisClientHands, function(handName) {
+        var selectedObject = scene.getObjectByName(handName);
+        selectedObject.visible = false;
+      });
+    }
+
+    this.viewHandModel = function(thisClientHands) {
+      angular.forEach(thisClientHands, function(handName) {
+        var selectedObject = scene.getObjectByName(handName);
+        selectedObject.visible = true;
+      });
+    }
+
     this.build = function(scene, isHost, index) {
       var hand = new Hand(scene, isHost, index);
-      console.log(hand);
+
       return hand;
     };
   });
