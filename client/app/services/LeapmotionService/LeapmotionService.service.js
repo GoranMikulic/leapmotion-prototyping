@@ -63,7 +63,7 @@ angular.module('cooperationprototypingApp')
 
     this.doHandMovement = function(hand) {
       var index = hand.index;
-      var handModel = (loadedHands[index] || (loadedHands[index] = Hand.build(sceneModel.scene, handData)));
+      var handModel = (loadedHands[index] || (loadedHands[index] = Hand.build(sceneModel.scene, hand.isHost)));
       handModel.outputData(index, hand);
     };
 

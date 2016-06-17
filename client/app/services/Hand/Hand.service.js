@@ -3,13 +3,13 @@
 angular.module('cooperationprototypingApp')
   .service('Hand', function (Fingers, SessionInfo) {
 
-    var Hand = function(scene, handDataViewerId) {
+    var Hand = function(scene, isHost) {
       var hand = this;
       var fingerlings = {};
       // Objects with a common parent doesn't collide all finger objects are added to this object
       //var parent = new Physijs.BoxMesh(new THREE.CubeGeometry(0, 0, 0), new THREE.MeshBasicMaterial({ color: 0x888888 }));
 
-      var isHostHand = SessionInfo.isHost;
+      var isHostHand = isHost;
       var geometry = new THREE.BoxGeometry(10, 100, 150);
       var material = new THREE.MeshNormalMaterial();
       var handBox = new Physijs.BoxMesh(geometry, material, 1);
@@ -46,8 +46,8 @@ angular.module('cooperationprototypingApp')
       threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     }
 
-    this.build = function(scene, handDataViewerId) {
-      var hand = new Hand(scene, handDataViewerId);
+    this.build = function(scene, isHost) {
+      var hand = new Hand(scene, isHost);
       return hand;
     };
   });

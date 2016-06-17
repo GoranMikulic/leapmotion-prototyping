@@ -7,7 +7,7 @@
  * because it has a recursive structure, it has to be converted.
  */
 angular.module('cooperationprototypingApp')
-  .service('lightHandModel', function() {
+  .service('lightHandModel', function(SessionInfo) {
 
     /**
      * Converts leapmotion coordinates to a lightweight model
@@ -31,7 +31,8 @@ angular.module('cooperationprototypingApp')
         'pitch': pitch,
         'yaw': yaw,
         'roll': roll,
-        'index': index
+        'index': index,
+        'isHost': SessionInfo.isHost
       };
 
       return lightHandModel;
