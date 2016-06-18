@@ -16,12 +16,12 @@
         this.initTime = new Date().getTime();
         this.scope = $scope;
         this.scope.sessionInfo = SessionInfo;
+        console.log(this.scope.sessionInfo.isHost);
         this.gameball;
       }
 
       $onInit() {
         var self = this;
-
         // Defines 3D-Environment, things like the ground, gravity, camera position..
         var sceneModel = self.SceneModel.build();
         self.LeapmotionService.init(sceneModel);

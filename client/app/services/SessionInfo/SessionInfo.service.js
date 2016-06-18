@@ -5,6 +5,10 @@ angular.module('cooperationprototypingApp')
 
     this.isHost = false;
     this.isSecondPlayer = false;
+
+    this.hostSelected = false;
+    this.playerTwoSelected = false;
+
     this.initTime;
 
     this.hostPoints = 0;

@@ -50,9 +50,19 @@ function onConnect(socket) {
 
   });
 
+  //When Player 1 is selected
+  socket.on('host', data => {
+    socket.emit('host', data);
+    socket.broadcast.emit('host', data);
+  });
+  //When Player 2 is selected
+  socket.on('playerTwo', data => {
+    socket.emit('playerTwo', data);
+    socket.broadcast.emit('playerTwo', data);
+  });
+
   socket.on('ballmovement', data => {
     socket.broadcast.emit('ballmovement', data);
-
   });
 
   socket.on('goal', data => {
