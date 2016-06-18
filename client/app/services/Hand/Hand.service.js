@@ -13,7 +13,7 @@ angular.module('cooperationprototypingApp')
       //var parent = new Three.Mesh(new THREE.CubeGeometry(0, 0, 0), new THREE.MeshBasicMaterial({ color: 0x888888 }));
 
       var isHostHand = isHost;
-      var geometry = new THREE.BoxGeometry(10, 100, 150);
+      var geometry = new THREE.BoxGeometry(100, 10, 150);
       var material = new THREE.MeshNormalMaterial();
       var handBox = new Physijs.BoxMesh(geometry, material, 1);
       handBox.name = index;
@@ -21,9 +21,9 @@ angular.module('cooperationprototypingApp')
 
       var xposition;
       if(isHostHand) {
-        xposition = 200;
+        xposition = 250;
       } else {
-        xposition = -200;
+        xposition = -250;
       }
 
       scene.add(handBox);
@@ -31,11 +31,12 @@ angular.module('cooperationprototypingApp')
       hand.outputData = function(index, hand) {
 
         handBox.position.set(xposition, hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2]);
-        //handBox.rotation.set(hand.pitch, -hand.yaw, hand.roll);
+        handBox.rotation.set(hand.pitch, -hand.yaw, hand.roll);
         cancelVelocity(handBox);
 
         hand.fingers.forEach(function(finger, index) {
-          var fingerling = (fingerlings[index] || (fingerlings[index] = Fingers.build(scene, fingerData, xposition)));
+          console.log("finger index" , index);
+          var fingerling = (fingerlings[index] || (fingerlings[index] = Fingers.build(scene, fingerData, xposition, handBox.name + index)));
           fingerling.outputData(index, finger);
         });
         //scene.add(parent);
@@ -46,6 +47,7 @@ angular.module('cooperationprototypingApp')
 
     function cancelVelocity(threeObject) {
       threeObject.__dirtyPosition = true;
+      threeObject.__dirtyRotation = true;
       threeObject.setLinearVelocity(new THREE.Vector3(0, 0, 0));
       threeObject.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     }
@@ -54,6 +56,16 @@ angular.module('cooperationprototypingApp')
       angular.forEach(thisClientHands, function(handName) {
         var selectedObject = scene.getObjectByName(handName);
         selectedObject.visible = false;
+
+        for(var i = 0; i < 5; i++) {
+            Fingers.hideFingerModel(handName + i, scene);
+        }
+      });
+    }
+
+    function hideFingers (fingerlings) {
+      angular.forEach(fingerlings, function(finger) {
+        finger.hideFingerModel();
       });
     }
 
@@ -61,6 +73,10 @@ angular.module('cooperationprototypingApp')
       angular.forEach(thisClientHands, function(handName) {
         var selectedObject = scene.getObjectByName(handName);
         selectedObject.visible = true;
+
+        for(var i = 0; i < 5; i++) {
+            Fingers.viewFingerModel(handName + i, scene);
+        }
       });
     }
 
