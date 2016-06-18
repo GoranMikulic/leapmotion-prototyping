@@ -1,12 +1,14 @@
-<div class="text-center">
+<div class="container">
+<div class="text-center jumbotron">
   <h1>Welcome to 3D-Pong</h1>
 
   <h3>Please select a Player<h3>
-  <div class="col-md-12">
+  <div>
     <button type="button" class="btn btn-primary btn-lg" ng-class="{'active': sessionInfo.isHost == true}" ng-click="$ctrl.setHost()">Player 1</button>
     <button type="button" class="btn btn-danger btn-lg" ng-class="{'active': sessionInfo.isSecondPlayer == true}" ng-click="$ctrl.setPlayer2()">Player 2</button>
 
     <!--<button type="button" class="btn btn-default" ng-click="$ctrl.startGame()" ng-class="{'disabled': sessionInfo.hostSelected == false, 'disabled' : sessionInfo.playerTwoSelected == false}">Start Game</button>-->
     <button type="button" class="btn btn-default btn-lg" ng-click="$ctrl.startGame()">Start Game</button>
   </div>
+</div>
 </div>
