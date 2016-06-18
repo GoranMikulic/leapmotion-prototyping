@@ -108,7 +108,7 @@ angular.module('cooperationprototypingApp')
 
       // axes
       var axis = new THREE.AxisHelper(250);
-      scene.add(axis);
+      //scene.add(axis);
       //render(scene, camera, renderer);
       scene.simulate();
       renderer.render(scene, camera);
