@@ -103,11 +103,13 @@ angular.module('cooperationprototypingApp')
 
       goal1.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
         emitGoal(scene, other_object, 2);
+        //socket.socket.emit('object', 'ball');
       });
 
       var goal2 = initMeshBox(-260, 225, 0, 600, 2, 450, nintyDegreeRotation, null, nintyDegreeRotation);
       goal2.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
         emitGoal(scene, other_object, 1);
+        //socket.socket.emit('object', 'ball');
       });
       scene.add(goal2);
 

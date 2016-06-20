@@ -30,6 +30,7 @@ angular.module('cooperationprototypingApp')
 
       hand.outputData = function(index, hand) {
         handBox.position.set(xposition, hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2]);
+        handBox.rotation.set(0, 0, 0);
         //handBox.rotation.set(hand.pitch, -hand.yaw, hand.roll);
         cancelVelocity(handBox);
 
