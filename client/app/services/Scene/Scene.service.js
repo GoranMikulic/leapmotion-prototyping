@@ -98,16 +98,16 @@ angular.module('cooperationprototypingApp')
       var wall2 = initMeshBox(0, 225, -250, 500, 2, 350, nintyDegreeRotation);
       scene.add(wall2);
 
-      var goal1 = initMeshBox(340, 225, 0, 600, 2, 450, nintyDegreeRotation, null, nintyDegreeRotation);
+      var goal1 = initMeshBox(260, 225, 0, 600, 2, 450, nintyDegreeRotation, null, nintyDegreeRotation);
       scene.add(goal1);
 
       goal1.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
-        emitGoal(scene, other_object, 1);
+        emitGoal(scene, other_object, 2);
       });
 
-      var goal2 = initMeshBox(-300, 225, 0, 600, 2, 450, nintyDegreeRotation, null, nintyDegreeRotation);
+      var goal2 = initMeshBox(-260, 225, 0, 600, 2, 450, nintyDegreeRotation, null, nintyDegreeRotation);
       goal2.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
-        emitGoal(scene, other_object, 2);
+        emitGoal(scene, other_object, 1);
       });
       scene.add(goal2);
 
