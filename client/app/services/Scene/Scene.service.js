@@ -44,6 +44,11 @@ angular.module('cooperationprototypingApp')
       sceneModel.controls = controls;
       sceneModel.scene = scene;
 
+      setInterval(function() {
+        sceneModel.scene.simulate(undefined, 2);
+      }, 50);
+
+
       sceneModel.update = function() {
         sceneModel.renderer.render(sceneModel.scene, sceneModel.camera);
         sceneModel.controls.update();
@@ -68,15 +73,15 @@ angular.module('cooperationprototypingApp')
       container.appendChild(renderer.domElement);
 
       var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
-      camera.position.set(500, 500, 500);
+      camera.position.set(0, 700, 1000);
 
 
       var controls = new THREE.TrackballControls(camera, renderer.domElement);
       var scene = new Physijs.Scene();
       scene.setGravity(new THREE.Vector3(0, 0, 0));
-      scene.addEventListener('update', function() {
-        scene.simulate(undefined, 2);
-      });
+      // scene.addEventListener('update', function() {
+      //   //scene.simulate(undefined, 2);
+      // });
 
       var ground = initMeshBox(0, 50, 0, 500, 2, 500);
       scene.add(ground);
