@@ -36,7 +36,8 @@ angular.module('cooperationprototypingApp')
 
     function revertBallMovement() {
       var oldVector = gameBall.getLinearVelocity();
-      gameBall.setLinearVelocity(new THREE.Vector3(oldVector.x - .5 * 100 * 10, oldVector.y - .5 * 10, oldVector.z + .5 * 100 * 10));
+      var speedup = 500;
+      gameBall.setLinearVelocity(new THREE.Vector3(oldVector.x - speedup, oldVector.y - speedup, oldVector.z + speedup));
     }
 
     function createNewBall() {
@@ -74,6 +75,23 @@ angular.module('cooperationprototypingApp')
     this.getBall = function() {
       return gameBall;
     };
+
+    //should be in Ball service but doesnt work there
+    function doInitialBallMovement() {
+      var oldVector = gameBall.getLinearVelocity();
+      gameBall.setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100 * 10, oldVector.y, oldVector.z));
+    }
+
+    this.initGameBall = function(isHost, scene) {
+      var isBallInScene = scene.getObjectByName("ball");
+      if (!isBallInScene) {
+        gameBall = this.createNewBall(isHost); //if is host creates Physical ball, otherwise non-physical
+        scene.add(gameBall);
+        if (isHost) {
+          doInitialBallMovement();
+        }
+      }
+    }
 
     this.setPosition = function(x, y, z) {
       gameBall.position.x = x;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cooperationprototypingApp')
-  .service('LeapmotionService', function(SceneModel, ObjectsUtils, socket, lightHandModel, Hand, Ball, SessionInfo) {
+  .service('LeapmotionService', function(SceneModel, ObjectsUtils, socket, lightHandModel, Hand, Ball, SessionInfo, $timeout) {
 
     /*
      * Variable for leapmotion loop, instantiated in $onInit() method in this
@@ -50,6 +50,14 @@ angular.module('cooperationprototypingApp')
       sceneModel.update();
     };
 
+    var gestureListener = function(gesture) {
+      if (gesture.type === 'circle') {
+        if (gesture.state === 'start') {
+          Ball.initGameBall(SessionInfo.isHost, sceneModel.getScene());
+        }
+      }
+    };
+
     this.init = function(threeSceneModel) {
       sceneModel = threeSceneModel;
       SessionInfo.initTime = initTime;
@@ -60,7 +68,7 @@ angular.module('cooperationprototypingApp')
           Hand.hideHandModel(clientIndex);
         }).on('handFound', function(hand) {
           Hand.viewHandModel(clientIndex);
-        });
+        }).on('gesture', gestureListener);
 
       loop.use('screenPosition', {
         scale: 0.25

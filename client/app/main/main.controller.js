@@ -33,23 +33,9 @@
         });
 
         // Listens if objects are created by other clients
-        // TODO: currently no sync of object movements
         this.clientSocket.on('object', function(type) {
-          self.gameball = self.Ball.createNewBall(self.scope.sessionInfo.isHost); //if is host creates Physical ball, otherwise non-physical
-          sceneModel.getScene().add(self.gameball);
-          if(self.scope.sessionInfo.isHost) {
-              doInitialBallMovement();
-          }
-          // var oldVector = self.gameball.getLinearVelocity();
-          // self.gameball.setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100 * 10, oldVector.y, oldVector.z));
-
+          self.gameball = self.Ball.initGameBall(self.scope.sessionInfo.isHost, sceneModel.getScene());
         });
-
-        //should be in Ball service but doesnt work there
-        function doInitialBallMovement() {
-          var oldVector = self.gameball.getLinearVelocity();
-          self.gameball.setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100 * 10, oldVector.y, oldVector.z));
-        }
 
         this.clientSocket.on('ballmovement', function(position) {
           if(!self.scope.sessionInfo.isHost) {
@@ -65,8 +51,8 @@
               self.scope.sessionInfo.secondPlayerPoints += 1;
           }
 
-          var selectedObject = sceneModel.getScene().getObjectByName("ball");
-          sceneModel.getScene().remove(selectedObject);
+          var ballObject = sceneModel.getScene().getObjectByName("ball");
+          sceneModel.getScene().remove(ballObject);
 
         });
       }
