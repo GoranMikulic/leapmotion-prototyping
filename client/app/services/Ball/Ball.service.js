@@ -6,7 +6,7 @@ angular.module('cooperationprototypingApp')
     var gameBall;
 
     function createNewPhysicalBall() {
-      //setInterval(function() {
+      
       var ball = new Physijs.SphereMesh(
         new THREE.SphereGeometry(
           20,

@@ -39,13 +39,6 @@ angular.module('cooperationprototypingApp')
 
       });
 
-
-      // if(Ball.getBall()) {
-      //   var oldVector = Ball.getBall().getLinearVelocity();
-      //   Ball.getBall().setLinearVelocity(new THREE.Vector3(oldVector.x + .5 * 100, oldVector.y, oldVector.z));
-      //   console.log(Ball.getBall().getLinearVelocity());
-      // }
-
       sendBallPosition();
       sceneModel.update();
     };
@@ -53,7 +46,7 @@ angular.module('cooperationprototypingApp')
     var gestureListener = function(gesture) {
       if (gesture.type === 'circle') {
         if (gesture.state === 'start') {
-          Ball.initGameBall(SessionInfo.isHost, sceneModel.getScene());
+          socket.socket.emit('object', 'ball');
         }
       }
     };
