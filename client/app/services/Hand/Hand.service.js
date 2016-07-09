@@ -17,6 +17,7 @@ angular.module('cooperationprototypingApp')
       var material = new THREE.MeshNormalMaterial();
       var handBox = new Physijs.BoxMesh(geometry, material, 1);
       handBox.name = index;
+      handBox.typeName = 'hand';
       hand.name = "hand";
 
       var xposition;

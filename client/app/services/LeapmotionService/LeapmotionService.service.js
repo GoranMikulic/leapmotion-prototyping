@@ -85,6 +85,15 @@ angular.module('cooperationprototypingApp')
             y: ball.position.y,
             z: ball.position.z
           };
+
+          var oldVector = ball.getLinearVelocity();
+          if(oldVector.x < 0 && oldVector.x > -500) {
+
+              ball.setLinearVelocity(new THREE.Vector3(-500, oldVector.y, oldVector.z));
+          } else if(oldVector.x > 0 && oldVector.x < 500) {
+              ball.setLinearVelocity(new THREE.Vector3(500, oldVector.y, oldVector.z));
+          }
+
           socket.socket.emit('ballmovement', position);
         }
       }
