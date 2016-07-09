@@ -380,7 +380,10 @@ module.exports = function(grunt) {
             'bower_components/**/*',
             'assets/images/{,*/}*.{webp}',
             'assets/fonts/**/*',
-            'index.html'
+            'index.html',
+            'ammo.js',
+            'physijs_worker.js',
+            'physi.js'
           ]
         }, {
           expand: true,
@@ -800,7 +803,6 @@ module.exports = function(grunt) {
     'cdnify',
     'cssmin',
     'uglify',
-    'filerev',
     'usemin'
   ]);
 

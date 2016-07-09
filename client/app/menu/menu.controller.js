@@ -1,6 +1,8 @@
 'use strict';
 (function() {
-
+  /**
+   * Controller for the game menu
+   */
   class MenuComponent {
     constructor(socket, $scope, SessionInfo, $location) {
 
@@ -14,7 +16,7 @@
 
     $onInit() {
       var self = this;
-      
+
       this.clientSocket.on('host', function(goalNo) {
         self.scope.sessionInfo.hostSelected = true;
       });
