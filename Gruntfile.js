@@ -383,7 +383,8 @@ module.exports = function(grunt) {
             'index.html',
             'ammo.js',
             'physijs_worker.js',
-            'physi.js'
+            'physi.js',
+            'three/**/*',
           ]
         }, {
           expand: true,
